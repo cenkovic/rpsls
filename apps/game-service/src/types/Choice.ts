@@ -1,4 +1,4 @@
-export type ChoiceId = number;
+export type ChoiceId = 1 | 2 | 3 | 4 | 5;
 
 export type Choice = 'rock' | 'paper' | 'scissors' | 'lizard' | 'spock';
 

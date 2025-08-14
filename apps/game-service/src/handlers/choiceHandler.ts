@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { Choice } from '../types/Choice';
+import { ChoiceOption } from '../types/Choice';
 import { getRandomChoiceOption } from '../utils/random';
 
 export const choiceHandler = async (
   req: Request,
-  res: Response<{ id: number; name: Choice }>
+  res: Response<ChoiceOption>
 ) => {
   res.send(await getRandomChoiceOption());
 };
