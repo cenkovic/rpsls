@@ -1,4 +1,6 @@
+/// <reference types="vite-plugin-svgr/client" />
 import { styled } from 'styled-components';
+import Paper from '../icons/paper.svg?react'
 
 const GameContainer = styled.div`
   display: flex;
@@ -34,7 +36,7 @@ export default function Game() {
     <GameContainer>
       <Title>Game Page</Title>
       <Instructions>
-        Welcome to the game! Make your choice to start playing.
+        Welcome to the game! Make your choice to start playing. <Paper width={100} height={100} fill={'#ff0000'}/>
       </Instructions>
     </GameContainer>
   );
