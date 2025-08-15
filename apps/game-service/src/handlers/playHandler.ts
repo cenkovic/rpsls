@@ -7,6 +7,7 @@ export const playHandler = async (
   req: Request<{player: ChoiceId}>,
   res: Response
 ) => {
+  console.log(req.body);
   const playerChoiceId = req.body.player;
   const computerChoice = await getRandomChoiceOption();
   const results = resolveBattle(playerChoiceId, computerChoice.id);

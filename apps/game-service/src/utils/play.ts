@@ -10,6 +10,7 @@ export const rpslsMap: Map<ChoiceId, ChoiceId[]> = new Map([
 ])
 
 export const resolveBattle = (playerChoiceId: ChoiceId, computerChoiceId: ChoiceId): BattleResults => {
+  console.log(playerChoiceId, computerChoiceId);
   if (playerChoiceId === computerChoiceId) {
     return 'tie';
   }

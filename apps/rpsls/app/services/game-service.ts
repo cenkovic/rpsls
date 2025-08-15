@@ -9,7 +9,14 @@ class GameService {
   }
 
   private request = async (endpoint: string, options?: RequestInit) => {
-    const response = await fetch(`${this.gameServiceUrl}${endpoint}`, options);
+    const {headers, ...restOptions} = options ?? {}
+    const response = await fetch(`${this.gameServiceUrl}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      },
+      ...restOptions,
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -24,7 +31,7 @@ class GameService {
 
   getChoices = () => this.get('/choices');
 
-  play = (playerChoiceId: number, playerName?: string) =>
+  play = (playerChoiceId: number, playerName?: string): Promise<{ player: number, computer: number, results: string }> =>
     this.post('/play', JSON.stringify({ player: playerChoiceId, playerName }));
 }
 
