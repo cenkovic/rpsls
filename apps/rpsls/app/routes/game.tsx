@@ -1,21 +1,19 @@
-import ChoiceButton from '../components/ChoiceButton/ChoiceButton';
-import './game.css'
+import './game.css';
+import { cache, Suspense } from 'react';
+import { gameService } from '../services/game-service';
+import { GameChoices } from '../components/GameChoices/GameChoices';
 
 export default function Game() {
   return (
     <div id={'game-container'}>
-      <h1 id={'game-title'}>Game Page</h1>
-      <p className='instructions'>
+      <h1 id={'game-title'}>RPSLS Game</h1>
+      <p className="instructions">
         Welcome to the game! Make your choice to start playing.
       </p>
 
-      <div id={'button-grid'}>
-        <ChoiceButton choice={'Rock'} />
-        <ChoiceButton choice={'Paper'} />
-        <ChoiceButton choice={'Scissors'} />
-        <ChoiceButton choice={'Lizard'} />
-        <ChoiceButton choice={'Spock'} />
-      </div>
+      <Suspense fallback={'Loading choices...'}>
+        <GameChoices choices={cache(gameService.getChoices)()} />
+      </Suspense>
     </div>
   );
 }

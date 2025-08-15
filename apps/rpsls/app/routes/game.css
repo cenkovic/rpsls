@@ -19,26 +19,11 @@
   font-family: 'Inter', sans-serif;
 }
 
-.game-instructions {
+.instructions {
   font-size: 1.3rem;
   color: #e0e0e0;
   text-align: center;
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
-}
-
-#button-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  justify-content: center;
-  justify-items: center;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  margin-bottom: 2rem;
 }
