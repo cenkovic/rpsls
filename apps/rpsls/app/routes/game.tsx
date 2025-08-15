@@ -1,6 +1,6 @@
-/// <reference types="vite-plugin-svgr/client" />
+'use client'
 import { styled } from 'styled-components';
-import Paper from '../icons/paper.svg?react'
+import ChoiceButton from '../components/ChoiceButton';
 
 const GameContainer = styled.div`
   display: flex;
@@ -11,24 +11,40 @@ const GameContainer = styled.div`
   width: 100%;
 
   @media (max-width: 768px) {
-    max-width: 90%; /* Adjust max width on smaller screens */
-    padding: 1rem; /* Adjust padding */
+    max-width: 90%;
+    padding: 1rem;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 2.5rem; /* Larger font for a bold header */
-  color: #ffffff; /* White text for contrast */
+  font-size: 2.5rem;
+  color: #ffffff;
   margin-bottom: 1rem;
-  font-family: 'Inter', sans-serif; /* Consistent font with global style */
+  font-family: 'Inter', sans-serif;
 `;
 
 const Instructions = styled.p`
-  font-size: 1.3rem; /* Slightly larger for readability */
-  color: #e0e0e0; /* Softer text color */
-  text-align: center; /* Center-align text for instructions */
-  font-family: 'Inter', sans-serif; /* Consistent font */
-  line-height: 1.6; /* Better line spacing for readability */
+  font-size: 1.3rem;
+  color: #e0e0e0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+`;
+
+const ButtonGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  justify-content: center;
+  justify-items: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export default function Game() {
@@ -36,8 +52,16 @@ export default function Game() {
     <GameContainer>
       <Title>Game Page</Title>
       <Instructions>
-        Welcome to the game! Make your choice to start playing. <Paper width={100} height={100} fill={'#ff0000'}/>
+        Welcome to the game! Make your choice to start playing.
       </Instructions>
+
+      <ButtonGrid>
+        <ChoiceButton choice={'Rock'} />
+        <ChoiceButton choice={'Paper'} />
+        <ChoiceButton choice={'Scissors'} />
+        <ChoiceButton choice={'Lizard'} />
+        <ChoiceButton choice={'Spock'} />
+      </ButtonGrid>
     </GameContainer>
   );
 }

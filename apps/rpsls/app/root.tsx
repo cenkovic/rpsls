@@ -12,7 +12,7 @@ import { styled,  createGlobalStyle } from 'styled-components';
 import { AppNav } from './app-nav';
 
 export const meta: MetaFunction = () => [
-  { title: 'Responsive RPSLS App' },
+  { title: 'RPSLS App' },
 ];
 
 export const links: LinksFunction = () => [
