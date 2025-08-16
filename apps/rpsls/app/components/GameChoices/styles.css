@@ -48,3 +48,13 @@
   }
 
 }
+
+.error-message {
+  color: white; /* White text for better readability */
+  padding: 1rem; /* Add spacing around the error message */
+  border-radius: 8px; /* Smooth rounded corners */
+  text-align: center; /* Center the text */
+  font-size: 2rem; /* Font size for better readability */
+  margin: 1rem 0; /* Add spacing between error messages and other elements */
+}
+

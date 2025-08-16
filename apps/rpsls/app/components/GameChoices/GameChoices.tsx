@@ -14,7 +14,7 @@ interface GameChoicesProps {
 }
 
 export const GameChoices = memo(({ afterPlay }: GameChoicesProps) => {
-  const { data: availableChoices = [], isLoading } = useChoicesQuery();
+  const { data: availableChoices = [], isLoading, isError: errorLoadingChoices } = useChoicesQuery();
   const { mutateAsync: play, isPending } = usePlayMutation()
   const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
@@ -43,7 +43,11 @@ export const GameChoices = memo(({ afterPlay }: GameChoicesProps) => {
   );
 
   if (error) {
-    return <div>{ error }</div>
+    return <div className={'error-message'}>{ error }</div>
+  }
+
+  if (errorLoadingChoices) {
+    return <div className={'error-message'}>Game is unavailable right now. Please try again later</div>
   }
 
   if (isLoading) {
