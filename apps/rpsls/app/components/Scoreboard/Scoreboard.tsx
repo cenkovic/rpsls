@@ -7,6 +7,9 @@ interface ScoreboardProps {
 }
 
 export const Scoreboard = ({outcomes, reset}: ScoreboardProps) => {
+  if (outcomes.length === 0) {
+    return null
+  }
   return (
     <div id={'scoreboard-container'}>
       <table className={'scoreboard-table'}>

@@ -19,6 +19,7 @@ export const GameChoices = memo(({ afterPlay }: GameChoicesProps) => {
   const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [outcome, setOutcome] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>()
 
   const select = useCallback(
     async (choice: Choice) => {
@@ -34,12 +35,16 @@ export const GameChoices = memo(({ afterPlay }: GameChoicesProps) => {
           computerChoice: computerChoice?.name ?? '?'
         })
       } catch (e) {
-        // do something
-        throw Error('Ups. Something went wrong...')
+        console.warn(e)
+        setError('Ups. Something went wrong...')
       }
     },
     [availableChoices, afterPlay, play]
   );
+
+  if (error) {
+    return <div>{ error }</div>
+  }
 
   if (isLoading) {
     return <div>Loading game choices...</div>
