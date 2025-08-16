@@ -6,5 +6,9 @@ export const choiceHandler = async (
   req: Request,
   res: Response<ChoiceOption>
 ) => {
+  try {
   res.send(await getRandomChoiceOption());
+  } catch (error) {
+    res.status(400).send();
+  }
 };
