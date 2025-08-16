@@ -1,20 +1,27 @@
 import './game.css';
-import { cache, Suspense, useMemo } from 'react';
-import { gameService } from '../services/game-service';
 import { GameChoices } from '../components/GameChoices/GameChoices';
+import { Scoreboard } from '../components/Scoreboard/Scoreboard';
+import { useCallback, useState } from 'react';
+import { Outcome } from '../types/Scoreboard';
 
 export default function Game() {
-  const choicesPromise = useMemo(() => cache(gameService.getChoices), []);
+
+  const [outcomes, setOutcomes] = useState<Outcome[]>([])
+
+  const afterPlay = useCallback((outcome: Outcome) => {
+    setOutcomes(prev => [outcome, ...prev].slice(0, 10))
+  }, [])
+
   return (
     <div id={'game-container'}>
       <h1 id={'game-title'}>RPSLS Game</h1>
       <p className="instructions">
         Welcome to the game! Make your choice to start playing.
       </p>
-
-      <Suspense fallback={'Loading choices...'}>
-        <GameChoices choices={choicesPromise()} />
-      </Suspense>
+        <GameChoices afterPlay={afterPlay}/>
+      <div>
+        <Scoreboard outcomes={outcomes} reset={() => setOutcomes([])}/>
+      </div>
     </div>
   );
 }

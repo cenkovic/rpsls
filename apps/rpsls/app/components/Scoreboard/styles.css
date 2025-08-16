@@ -1,0 +1,65 @@
+#scoreboard-container {
+  margin: 2rem auto;
+  max-width: 800px;
+  background-color: rgba(255, 255, 255, 0.1); /* Slight transparency for style */
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.scoreboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+
+  th, td {
+    padding: 0.75rem 1rem;
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.2); /* Highlight header */
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s;
+  }
+
+  td {
+    color: #e0e0e0; /* Light color for text */
+  }
+}
+
+.reset-scoreboard-btn {
+  margin: 1rem 0;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #ff4081, #d81b60); /* Pink gradient button */
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+
+}

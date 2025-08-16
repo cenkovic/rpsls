@@ -2,44 +2,48 @@
 'use client';
 import ChoiceButton from '../ChoiceButton/ChoiceButton';
 import './styles.css';
-import { use, useCallback, useState } from 'react';
-import { gameService } from '../../services/game-service';
+import { memo, useCallback, useState } from 'react';
 import Fight from '../../icons/fight.svg?react';
-
-interface Choice {
-  id: number;
-  name: string;
-}
+import { useChoicesQuery } from '../../hooks/useChoicesQuery';
+import { Choice } from '../../types/Choice';
+import { Outcome } from '../../types/Scoreboard';
+import { usePlayMutation } from '../../hooks/usePlayMutation';
 
 interface GameChoicesProps {
-  choices: Promise<Choice[]>;
+  afterPlay: (outcome: Outcome) => void;
 }
 
-export const GameChoices = ({ choices }: GameChoicesProps) => {
-  const availableChoices = use(choices);
+export const GameChoices = memo(({ afterPlay }: GameChoicesProps) => {
+  const { data: availableChoices = [], isLoading } = useChoicesQuery();
+  const { mutateAsync: play, isPending } = usePlayMutation()
   const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [outcome, setOutcome] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const select = useCallback(
     async (choice: Choice) => {
-      setIsSubmitting(true);
       try {
         setSelectedChoice(choice);
-        const { results, computer } = await gameService.play(choice.id);
-        setComputerChoice(
-          availableChoices.find((_) => _.id === computer) ?? null
-        );
+        const { results, computer } = await play(choice.id);
+        const computerChoice = availableChoices.find((_) => _.id === computer);
+        setComputerChoice(computerChoice ?? null);
         setOutcome(results);
+        afterPlay({
+          outcome: results,
+          playerChoice: choice.name,
+          computerChoice: computerChoice?.name ?? '?'
+        })
       } catch (e) {
         // do something
-      } finally {
-        setIsSubmitting(false);
+        throw Error('Ups. Something went wrong...')
       }
     },
-    [availableChoices]
+    [availableChoices, afterPlay, play]
   );
+
+  if (isLoading) {
+    return <div>Loading game choices...</div>
+  }
 
   if (selectedChoice) {
     return (
@@ -49,7 +53,7 @@ export const GameChoices = ({ choices }: GameChoicesProps) => {
           <Fight width={64} height={64} />
           <ChoiceButton choice={computerChoice?.name ?? '?'} />
         </div>
-        <div id={'outcome'}>{isSubmitting ? 'fighting...' : outcome}</div>
+        <div id={'outcome'}>{isPending ? 'fighting...' : outcome}</div>
         {outcome && (
           <div style={{ marginTop: '1rem' }}>
             <button
@@ -79,4 +83,4 @@ export const GameChoices = ({ choices }: GameChoicesProps) => {
       ))}
     </div>
   );
-};
+});

@@ -8,15 +8,17 @@ import {
   type LinksFunction,
 } from 'react-router';
 import './root.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { AppNav } from './app-nav';
+const queryClient = new QueryClient();
 
-export const meta: MetaFunction = () => [
-  { title: 'RPSLS App' },
-];
+export const meta: MetaFunction = () => [{ title: 'RPSLS App' }];
 
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap' },
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap',
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -29,12 +31,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-      <div id='page-wrapper'>
-          <AppNav />
-          <div id={'main-content'}>{children}</div>
+        <div id="page-wrapper">
+          <QueryClientProvider client={queryClient}>
+            <div id={'main-content'}>{children}</div>
+          </QueryClientProvider>
           <ScrollRestoration />
           <Scripts />
-      </div>
+        </div>
       </body>
     </html>
   );

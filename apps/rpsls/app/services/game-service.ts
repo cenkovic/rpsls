@@ -1,3 +1,5 @@
+import { Choice } from '../types/Choice';
+
 class GameService {
   private gameServiceUrl: string;
 
@@ -9,7 +11,7 @@ class GameService {
   }
 
   private request = async (endpoint: string, options?: RequestInit) => {
-    const {headers, ...restOptions} = options ?? {}
+    const { headers, ...restOptions } = options ?? {};
     const response = await fetch(`${this.gameServiceUrl}${endpoint}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +23,6 @@ class GameService {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return response.json();
-
   };
 
   private get = async (endpoint: string) => this.request(endpoint);
@@ -29,9 +30,12 @@ class GameService {
   private post = async (endpoint: string, data: RequestInit['body']) =>
     this.request(endpoint, { method: 'POST', body: data });
 
-  getChoices = () => this.get('/choices');
+  getChoices = (): Promise<Choice[]> => this.get('/choices');
 
-  play = (playerChoiceId: number, playerName?: string): Promise<{ player: number, computer: number, results: string }> =>
+  play = (
+    playerChoiceId: number,
+    playerName?: string
+  ): Promise<{ player: number; computer: number; results: string }> =>
     this.post('/play', JSON.stringify({ player: playerChoiceId, playerName }));
 }
 
