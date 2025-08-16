@@ -1,10 +1,11 @@
 import { Choice } from '../types/Choice';
+import { GAME_SERVICE_URL } from '../constants';
 
 class GameService {
   private gameServiceUrl: string;
 
   constructor() {
-    this.gameServiceUrl = import.meta.env.VITE_GAME_SERVICE_URL;
+    this.gameServiceUrl = GAME_SERVICE_URL;
     if (!this.gameServiceUrl) {
       throw new Error('Missing game service url');
     }
